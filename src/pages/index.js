@@ -1,3 +1,21 @@
 import React from "react"
+import { Link } from "gatsby"
+import Layout from "./../components/layout"
+import "../../node_modules/bootstrap/dist/css/bootstrap.min.css"
+import "../styles/index.sass"
 
-export default () => <div>Hello world!</div>
+const IndexPage = () => {
+  return (
+    <div>
+      <Layout>
+        <h1>Hello,</h1>
+        <h2>I'm Ilkhom, a Web developer from Uzbekistan!</h2>
+        <p>
+          If you want contact with me, <Link to="/contact">click this</Link>
+        </p>
+      </Layout>
+    </div>
+  )
+}
+
+export default IndexPage
