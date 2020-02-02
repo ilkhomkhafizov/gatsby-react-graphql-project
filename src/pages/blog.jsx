@@ -1,19 +1,17 @@
 import React from "react"
 import Layout from "./../components/layout"
-import { Card, CardGroup } from "react-bootstrap"
-import { graphql, useStaticQuery } from "gatsby"
+import { Card, CardColumns } from "react-bootstrap"
+import { Link, graphql, useStaticQuery } from "gatsby"
 
 const BlogPage = () => {
   const data = useStaticQuery(graphql`
     query {
-      allMarkdownRemark {
+      allContentfulBlogPost(sort: { fields: publishedDate, order: DESC }) {
         edges {
           node {
-            frontmatter {
-              title
-              date
-            }
-            excerpt
+            title
+            slug
+            publishedDate(formatString: "MMMM Do, YYYY")
           }
         }
       }
@@ -21,28 +19,29 @@ const BlogPage = () => {
   `)
   return (
     <Layout>
-      <h1>Blog</h1>
-      <CardGroup>
-        {data.allMarkdownRemark.edges.map(edge => {
+      <h1 className="mb-5">Blog</h1>
+      <CardColumns>
+        {data.allContentfulBlogPost.edges.map(edge => {
           return (
-            <Card
-              style={{ width: "18rem", marginRight: "30px" }}
-              key={edge.node.id}
-            >
+            <Card key={edge.node.id}>
+              <Card.Header>By Ilkhom</Card.Header>
               <Card.Body>
-                <Card.Title>{edge.node.frontmatter.title}</Card.Title>
-                <Card.Subtitle className="mb-2 text-muted">
-                  Card Subtitle
-                </Card.Subtitle>
-                <Card.Text>{edge.node.excerpt}</Card.Text>
+                <Card.Title>{edge.node.title}</Card.Title>
+                <Link
+                  to={`/blog/${edge.node.slug}`}
+                  className="primary"
+                  type="button"
+                >
+                  Go to
+                </Link>
               </Card.Body>
               <Card.Footer className="text-muted">
-                {edge.node.frontmatter.date}
+                {edge.node.publishedDate}
               </Card.Footer>
             </Card>
           )
         })}
-      </CardGroup>
+      </CardColumns>
     </Layout>
   )
 }
