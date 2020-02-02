@@ -2,6 +2,7 @@ import React from "react"
 import Layout from "./../components/layout"
 import { Card, CardColumns } from "react-bootstrap"
 import { Link, graphql, useStaticQuery } from "gatsby"
+import Head from "../components/head"
 
 const BlogPage = () => {
   const data = useStaticQuery(graphql`
@@ -19,6 +20,7 @@ const BlogPage = () => {
   `)
   return (
     <Layout>
+      <Head title="Blog" />
       <h1 className="mb-5">Blog</h1>
       <CardColumns>
         {data.allContentfulBlogPost.edges.map(edge => {
